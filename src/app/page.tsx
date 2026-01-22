@@ -40,6 +40,21 @@ export default function Home() {
             >
               ⚡ Lab 02: React Compiler
             </a>
+            <a
+              href="/lab03"
+              style={{
+                display: 'inline-block',
+                padding: '1rem 2rem',
+                background: '#9c27b0',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                fontWeight: 'bold',
+                fontSize: '1.1rem'
+              }}
+            >
+              🎣 Lab 03: Hook use()
+            </a>
           </div>
         </div>
         <div className={styles.ctas}>
