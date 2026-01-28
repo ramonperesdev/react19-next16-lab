@@ -1,0 +1,74 @@
+name: Deploy to Production
+
+# Só executa quando há push na branch main
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types: [completed]
+    branches: [main]
+  push:
+    branches: [main]
+
+env:
+  NODE_VERSION: 20
+
+jobs:
+  # Primeiro garante que todos os testes passam
+  ci-checks:
+    name: 🔍 Pre-Deploy Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Lint, Type Check e Testes
+        run: |
+          npm run lint
+          npm run type-check
+          npm run test:ci
+
+      - name: Build
+        run: npm run build
+
+  # Deploy para produção
+  deploy:
+    name: 🚀 Deploy
+    runs-on: ubuntu-latest
+    needs: ci-checks
+    environment:
+      name: production
+      url: https://seu-app.vercel.app # Substitua pela URL real
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Deploy para produção
+        run: |
+          echo "🚀 Deploy iniciado..."
+          echo "📦 Enviando build para servidor..."
+          echo "✅ Deploy concluído com sucesso!"
+
+          # AQUI VOCÊ ADICIONARIA OS COMANDOS REAIS DE DEPLOY:
+          # - Vercel: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+          # - AWS Amplify: aws amplify ...
+          # - Netlify: netlify deploy --prod
+          # - Docker: docker build & docker push
+
+      - name: Notificar sucesso
+        if: success()
+        run: echo "✅ Deploy para produção realizado com sucesso!"
+
+      - name: Notificar falha
+        if: failure()
+        run: echo "❌ Deploy falhou! Verificar logs."

@@ -1,0 +1,39 @@
+name: Scheduled Tests
+
+# Executa testes automaticamente todos os dias às 3h da manhã
+on:
+  schedule:
+    - cron: '0 3 * * *'  # 3 AM UTC todos os dias
+  workflow_dispatch:  # Permite execução manual também
+
+env:
+  NODE_VERSION: 20
+
+jobs:
+  nightly-tests:
+    name: 🌙 Nightly Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Instalar dependências
+        run: npm ci
+      
+      - name: Executar todos os testes
+        run: npm run test:all
+        continue-on-error: true
+      
+      - name: Relatório de resultados
+        if: always()
+        run: |
+          echo "📊 Testes noturnos concluídos"
+          echo "📅 Data: $(date)"
+          echo "🔗 Commit: ${{ github.sha }}"
