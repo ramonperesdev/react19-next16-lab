@@ -2,10 +2,6 @@ name: Deploy to Production
 
 # Só executa quando há push na branch main
 on:
-  workflow_run:
-    workflows: ["CI Pipeline"]
-    types: [completed]
-    branches: [main]
   push:
     branches: [main]
 
