@@ -4,6 +4,8 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - npm run type-check
+        - npm run test:ci
     build:
       commands:
         - npm run build
