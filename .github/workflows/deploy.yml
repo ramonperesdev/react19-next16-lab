@@ -43,7 +43,7 @@ jobs:
     needs: ci-checks
     environment:
       name: production
-      url: https://seu-app.vercel.app # Substitua pela URL real
+      url: https://react19-next16-lab.vercel.app # Substitua pela URL real
 
     steps:
       - name: Checkout do código
@@ -55,11 +55,8 @@ jobs:
           echo "📦 Enviando build para servidor..."
           echo "✅ Deploy concluído com sucesso!"
 
-          # AQUI VOCÊ ADICIONARIA OS COMANDOS REAIS DE DEPLOY:
-          # - Vercel: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+          # AQUI SERIA O COMANDO PARA DEPLOY NA AWS AMPLIFY
           # - AWS Amplify: aws amplify ...
-          # - Netlify: netlify deploy --prod
-          # - Docker: docker build & docker push
 
       - name: Notificar sucesso
         if: success()
