@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Test artifacts:
+    "coverage/**",
+    "playwright-report/**",
+    "test-results/**",
+    // Config files:
+    "jest.config.js",
+    "jest.setup.js",
   ]),
 ]);
 
