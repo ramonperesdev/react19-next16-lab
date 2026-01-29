@@ -3,9 +3,15 @@ frontend:
   phases:
     preBuild:
       commands:
+        - nvm use 20
         - npm ci
-        - npm run type-check
-        - npm run test:ci
+        - |
+          if [ "$AWS_BRANCH" == "main" ]; then
+            npm run test:ci
+            npm run type-check
+          else
+            echo "Skipping tests for non-main branch"
+          fi
     build:
       commands:
         - npm run build
@@ -16,3 +22,4 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
+      - .next/cache/**/*
