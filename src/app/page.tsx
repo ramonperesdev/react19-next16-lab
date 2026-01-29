@@ -5,13 +5,13 @@ export default function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <div className={styles.intro}>
-          <h1>React 19 + Next.js 16 Lab</h1>
+          <h1>React 19 + Next.js 16 Lab {process.env.NEXT_PUBLIC_TEXT}</h1>
           <p>Bem-vindo ao laboratório de estudos! Comece explorando os labs:</p>
 
           <h2
             style={{ marginTop: "2rem", fontSize: "1.5rem", color: "#0070f3" }}
           >
-            React 19 & Next.js 16 teste deploy
+            React 19 & Next.js 16
           </h2>
           <div
             style={{
